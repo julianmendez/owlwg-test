@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
+<title>OWL Working Group test</title>
+<meta http-equiv="Content-Type" content=
+"text/html; charset=us-ascii" />
+<meta name="author" content="Julian Mendez" />
+</head>
+<body>
+<div>
+<p>Source code in this package is provided under the terms of the
+GNU Affero General Public License (AGPL) version 3 (see
+LICENSE.txt).</p>
+<p>To run tests with the default test runner (Pellet)<br />
+<br />
+<code>java com.clarkparsia.owlwg.Harness
+file:///tmp/my-file-of-tests.owl</code></p>
+<p>To use a specific test runner set the
+<code>Harness.TestRunner</code> system property<br />
+<br />
+<code>java
+-DHarness.TestRunner=com.clarkparsia.owlwg.runner.hermit.HermiTTestRunner
+com.clarkparsia.owlwg.Harness
+file:///tmp/my-file-of-tests.owl</code></p>
+<p>The single argument should be a URL for a file containing one or
+more test cases described using the vocabulary described in the OWL
+2 Test and Conformance document at <a href=
+"http://www.w3.org/TR/owl2-test/">http://www.w3.org/TR/owl2-test/</a>
+and serialized in RDF/XML. file: and http: URI schemes are
+supported.</p>
+<p>Test cases in this format are available at the OWL 2 Test Case
+Repository <a href=
+"http://km.aifb.uni-karlsruhe.de/projects/owltests/index.php/OWL_2_Test_Cases">
+http://km.aifb.uni-karlsruhe.de/projects/owltests/index.php/OWL_2_Test_Cases</a>.
+For each test case, the 'Download OWL' link exports the test case
+in the appropriate format and can be used directly.</p>
+<p>The output of the program is an OWL ontology, serialized in
+Turtle, describing the test run, using the vocabulary described at
+<a href=
+"http://www.w3.org/2007/OWL/wiki/Test_Result_Format">http://www.w3.org/2007/OWL/wiki/Test_Result_Format</a>.</p>
+<p>Comments to Michael Smith <a href=
+"mailto:msmith@clarkparsia.com">&lt;msmith@clarkparsia.com&gt;</a></p>
+</div>
+</body>
+</html>
