@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="core/src"/>
+	<classpathentry kind="src" path="cel/src"/>
+	<classpathentry kind="src" path="hermit/src"/>
+	<classpathentry kind="src" path="factpp/src"/>
+	<classpathentry kind="src" path="pellet/src"/>
+	<classpathentry kind="src" path="wiki/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/commons-cli/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/owlapi/owlapi-bin.jar"/>
+	<classpathentry kind="lib" path="cel/lib/de.tudresden.inf.lat.cel.jar"/>
+	<classpathentry kind="lib" path="hermit/lib/HermiT.jar"/>
+	<classpathentry kind="lib" path="pellet/lib/pellet-core.jar"/>
+	<classpathentry kind="lib" path="pellet/lib/pellet-owlapi.jar"/>
+	<classpathentry kind="output" path="dist/bin"/>
+</classpath>
