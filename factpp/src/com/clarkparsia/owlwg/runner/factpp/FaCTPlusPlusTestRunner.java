@@ -3,15 +3,13 @@ package com.clarkparsia.owlwg.runner.factpp;
 import java.net.URI;
 import java.util.Collections;
 
+import org.mindswap.pellet.exceptions.InconsistentOntologyException;
 import org.semanticweb.owl.inference.OWLReasoner;
 import org.semanticweb.owl.inference.OWLReasonerException;
 import org.semanticweb.owl.model.OWLAxiom;
 import org.semanticweb.owl.model.OWLOntology;
 import org.semanticweb.owl.model.OWLOntologyManager;
 import org.semanticweb.reasonerfactory.factpp.FaCTPlusPlusReasonerFactory;
-
-import uk.ac.manchester.cs.factplusplus.InconsistentOntologyException;
-import uk.ac.manchester.cs.factplusplus.owlapi.FaCTPlusPlusReasonerException;
 
 import com.clarkparsia.owlwg.runner.AbstractTestRunner;
 import com.clarkparsia.owlwg.runner.EntailmentChecker;
@@ -49,7 +47,7 @@ public class FaCTPlusPlusTestRunner extends AbstractTestRunner {
 		try {
 			reasoner.classify();
 			return reasoner.isConsistent( o );
-		} catch( FaCTPlusPlusReasonerException e ) {
+		} catch( OWLReasonerException e ) {
 			Throwable cause = e.getCause();
 			if( (cause != null) && (cause instanceof InconsistentOntologyException) )
 				return false;
