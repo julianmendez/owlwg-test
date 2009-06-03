@@ -25,7 +25,7 @@
 	<property name="_pellet.lib.path" value="${_pellet.path}/lib" />
 
 	<property name="_src.doc.path" value="doc" />
-	<property name="_manifest.path" value="manifest/manifest.mf" />
+	<property name="_manifest.path" value="manifest/MANIFEST.MF" />
 	<property name="_javadoc.path" value="${dist.path}/javadoc" />
 	<property name="_main.bin.path" value="${dist.path}/bin" />
 	<property name="_prjlib.path" value="${dist.path}/lib" />
@@ -101,7 +101,7 @@
 		<zip destfile="${_zipfile.path}" basedir="${basedir}" />
 	</target>
 
-	<target name="dist" depends="clean, build, javadoc, jar, app">
+	<target name="dist" depends="clean, build, javadoc, jar, app, zip">
 		<buildnumber />
 	</target>
 
