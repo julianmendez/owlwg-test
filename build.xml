@@ -86,8 +86,8 @@
 			<fileset dir="${basedir}">
 				<include name="${_core.lib.path}/**/*.jar" />
 				<exclude name="${_core.lib.path}/**/*-src.jar" />
-				<include name="${_cel.lib.path}/*.jar" />
-				<include name="${_hermit.lib.path}/**.jar" />
+				<include name="${_cel.lib.path}/**/*.jar" />
+				<include name="${_hermit.lib.path}/**/*.jar" />
 				<include name="${_pellet.lib.path}/**/*.jar" />
 			</fileset>
 		</copy>
