@@ -7,5 +7,6 @@ Class-Path: lib/commons-cli/commons-cli-1.2.jar lib/owlapi/owlapi-bin.
  ib/pellet-datatypes.jar pellet/lib/pellet-el.jar pellet/lib/pellet-ow
  lapi.jar pellet/lib/pellet-rules.jar pellet/lib/xsdlib/relaxngDatatyp
  e.jar pellet/lib/xsdlib/xsdlib.jar hermit/lib/HermiT.jar cel/lib/jsex
- p-0.1.0.jar cel/lib/de.tudresden.inf.lat.cel.jar
+ p/jsexp-0.1.0.jar cel/lib/de.tudresden.inf.lat.cel/de.tudresden.inf.l
+ at.cel.jar
 
