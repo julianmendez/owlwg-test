@@ -15,14 +15,12 @@
 	<property name="_factpp.path" value="factpp" />
 	<property name="_hermit.path" value="hermit" />
 	<property name="_pellet.path" value="pellet" />
-	<property name="_wiki.path" value="wiki" />
 
 	<property name="_core.src.path" value="${_core.path}/src" />
 	<property name="_cel.src.path" value="${_cel.path}/src" />
 	<property name="_factpp.src.path" value="${_factpp.path}/src" />
 	<property name="_hermit.src.path" value="${_hermit.path}/src" />
 	<property name="_pellet.src.path" value="${_pellet.path}/src" />
-	<property name="_wiki.src.path" value="${_wiki.path}/src" />
 
 	<property name="_core.lib.path" value="lib" />
 	<property name="_cel.lib.path" value="${_cel.path}/lib" />
@@ -60,7 +58,6 @@
 			<src path="${_factpp.src.path}" />
 			<src path="${_hermit.src.path}" />
 			<src path="${_pellet.src.path}" />
-			<src path="${_wiki.src.path}" />
 		</javac>
 	</target>
 
@@ -68,7 +65,7 @@
 	<target name="javadoc">
 		<mkdir dir="${_javadoc.path}" />
 		<javadoc packagenames="*" 
-		    sourcepath="${_src.doc.path}:${_core.src.path}:${_cel.src.path}:${_factpp.src.path}:${_hermit.src.path}:${_pellet.src.path}:${_wiki.src.path}" 
+		    sourcepath="${_src.doc.path}:${_core.src.path}:${_cel.src.path}:${_factpp.src.path}:${_hermit.src.path}:${_pellet.src.path}" 
 		    destdir="${_javadoc.path}" version="true" use="true" windowtitle="${ant.project.name}" overview="${_src.doc.path}/overview.html" classpathref="all.libraries" access="package" />
 	</target>
 
