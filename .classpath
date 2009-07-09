@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="core/src"/>
+	<classpathentry kind="src" path="owlapi3/src"/>
 	<classpathentry kind="src" path="cel/src"/>
 	<classpathentry kind="src" path="hermit/src"/>
-	<classpathentry kind="src" path="factpp/src"/>
 	<classpathentry kind="src" path="pellet/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/commons-cli/commons-cli-1.2.jar"/>
