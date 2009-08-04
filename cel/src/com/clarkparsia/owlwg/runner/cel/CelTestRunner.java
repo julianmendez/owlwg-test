@@ -10,7 +10,6 @@ import org.semanticweb.owl.model.OWLLogicalAxiom;
 import org.semanticweb.owl.model.OWLOntology;
 import org.semanticweb.owl.model.OWLOntologyManager;
 
-import com.clarkparsia.owlwg.owlapi2.runner.impl.OwlApi2EntailmentChecker;
 import com.clarkparsia.owlwg.owlapi2.runner.impl.OwlApi2AbstractRunner;
 
 /**
@@ -27,7 +26,9 @@ public class CelTestRunner extends OwlApi2AbstractRunner {
 	private OWLReasoner reasoner = null;
 
 	public void dispose() throws OWLReasonerException {
-		this.reasoner.dispose();
+		if (this.reasoner != null) {
+			this.reasoner.dispose();
+		}
 	}
 
 	public String getName() {
@@ -63,8 +64,8 @@ public class CelTestRunner extends OwlApi2AbstractRunner {
 		reasoner.loadOntologies(Collections.singleton(premise));
 		reasoner.classify();
 
-		CelEntailmentChecker checker = new CelEntailmentChecker(reasoner, manager
-				.getOWLDataFactory());
+		CelEntailmentChecker checker = new CelEntailmentChecker(reasoner,
+				manager.getOWLDataFactory());
 
 		boolean ret = true;
 		for (Iterator<OWLLogicalAxiom> it = conclusion.getLogicalAxioms()
