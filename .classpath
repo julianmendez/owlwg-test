@@ -3,12 +3,15 @@
 	<classpathentry kind="src" path="core/src"/>
 	<classpathentry kind="src" path="owlapi3/src"/>
 	<classpathentry kind="src" path="cel/src"/>
+	<classpathentry kind="src" path="jcel/src"/>
 	<classpathentry kind="src" path="hermit/src"/>
 	<classpathentry kind="src" path="pellet/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/commons-cli/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/owlapiv3/owlapi-bin.jar"/>
 	<classpathentry kind="lib" path="cel/lib/de.tudresden.inf.lat.cel/de.tudresden.inf.lat.cel.jar"/>
+	<classpathentry kind="lib" path="jcel/lib/de.tudresden.inf.lat.jcel.core/de.tudresden.inf.lat.jcel.core-0.5.0.jar"/>
+	<classpathentry kind="lib" path="jcel/lib/de.tudresden.inf.lat.jcel/de.tudresden.inf.lat.jcel.jar"/>
 	<classpathentry kind="lib" path="hermit/lib/HermiT.jar"/>
 	<classpathentry kind="lib" path="pellet/lib/pellet-core.jar"/>
 	<classpathentry kind="lib" path="pellet/lib/pellet-owlapiv3.jar"/>
