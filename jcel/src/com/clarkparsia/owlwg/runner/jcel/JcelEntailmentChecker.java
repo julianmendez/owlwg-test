@@ -45,7 +45,7 @@ import org.semanticweb.owl.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owl.model.OWLTransitiveObjectPropertyAxiom;
 import org.semanticweb.owl.model.SWRLRule;
 
-import de.tudresden.inf.lat.cel.owlapi.UnsupportedReasonerOperationInCelException;
+import de.tudresden.inf.lat.jcel.owlapi.UnsupportedReasonerOperationInJcelException;
 
 /**
  * The EntailmentChecker class for the CEL reasoner.
@@ -223,7 +223,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLDataPropertyDomainAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: data property domain");
 
 			return false;
@@ -264,7 +264,7 @@ public class JcelEntailmentChecker {
 		public Boolean visit(OWLEquivalentObjectPropertiesAxiom axiom) {
 
 			// FIXME: really not supported?
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: equivalent object properties");
 
 			return false;
@@ -273,7 +273,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLNegativeDataPropertyAssertionAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: data property assertion");
 
 			return false;
@@ -282,7 +282,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLDifferentIndividualsAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: different individuals");
 
 			return false;
@@ -291,7 +291,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLDisjointDataPropertiesAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: disjoint data properties");
 
 			return false;
@@ -301,7 +301,7 @@ public class JcelEntailmentChecker {
 		public Boolean visit(OWLDisjointObjectPropertiesAxiom axiom) {
 
 			// FIXME: really not supported?
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: disjoint object properties");
 
 			return false;
@@ -367,7 +367,7 @@ public class JcelEntailmentChecker {
 		public Boolean visit(OWLObjectSubPropertyAxiom axiom) {
 
 			// FIXME: really not supported? (should be)
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: object sub property");
 
 			return false;
@@ -377,7 +377,7 @@ public class JcelEntailmentChecker {
 		public Boolean visit(OWLDisjointUnionAxiom axiom) {
 
 			// FIXME: really not supported? (should be)
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: disjoint union");
 
 			return false;
@@ -422,7 +422,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLDataPropertyRangeAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: data property range");
 
 			return false;
@@ -431,7 +431,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLFunctionalDataPropertyAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: functional data property");
 
 			return false;
@@ -440,7 +440,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLEquivalentDataPropertiesAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: equivalent data properties");
 
 			return false;
@@ -504,7 +504,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLDataPropertyAssertionAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: data property assertion");
 
 			return false;
@@ -549,7 +549,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLDataSubPropertyAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: data sub property");
 
 			return false;
@@ -576,7 +576,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLSameIndividualsAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: same individuals");
 
 			return false;
@@ -586,7 +586,7 @@ public class JcelEntailmentChecker {
 		public Boolean visit(OWLObjectPropertyChainSubPropertyAxiom axiom) {
 
 			// FIXME: really unsupported?
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: property chain sub property");
 
 			return false;
@@ -595,7 +595,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLInverseObjectPropertiesAxiom axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: inverse object property");
 
 			return false;
@@ -604,7 +604,7 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(SWRLRule axiom) {
 
-			exception = new UnsupportedReasonerOperationInCelException(
+			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: SWRL rule");
 
 			return false;

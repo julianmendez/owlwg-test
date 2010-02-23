@@ -11,8 +11,6 @@ import org.semanticweb.owl.model.OWLOntology;
 import org.semanticweb.owl.model.OWLOntologyManager;
 
 import com.clarkparsia.owlwg.owlapi2.runner.impl.OwlApi2AbstractRunner;
-import com.clarkparsia.owlwg.runner.cel.CelEntailmentChecker;
-import com.clarkparsia.owlwg.runner.cel.CelReasonerManager;
 
 /**
  * Test runner for jcel.
@@ -58,15 +56,15 @@ public class JcelTestRunner extends OwlApi2AbstractRunner {
 			OWLOntology premise, OWLOntology conclusion)
 			throws OWLReasonerException {
 
-		OWLReasoner reasoner = CelReasonerManager.getInstance().getCelReasoner(
-				manager);
+		OWLReasoner reasoner = JcelReasonerManager.getInstance()
+				.getJcelReasoner(manager);
 		this.reasoner = reasoner;
 
 		reasoner.clearOntologies();
 		reasoner.loadOntologies(Collections.singleton(premise));
 		reasoner.classify();
 
-		CelEntailmentChecker checker = new CelEntailmentChecker(reasoner,
+		JcelEntailmentChecker checker = new JcelEntailmentChecker(reasoner,
 				manager.getOWLDataFactory());
 
 		boolean ret = true;
