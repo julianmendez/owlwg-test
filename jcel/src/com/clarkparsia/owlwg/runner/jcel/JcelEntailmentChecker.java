@@ -66,7 +66,7 @@ public class JcelEntailmentChecker {
 	 * The standard constructor.
 	 * 
 	 * @param reasoner
-	 *            CEL reasoner instance
+	 *            jcel reasoner instance
 	 * @param factory
 	 *            OWL data factory
 	 */
