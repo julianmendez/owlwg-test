@@ -14,8 +14,7 @@ public class JcelReasonerManager {
 
 	public JcelReasoner getJcelReasoner(OWLOntologyManager manager) {
 		if (this.reasoner == null && manager != null) {
-			this.reasoner = new JcelReasoner(manager.getOWLDataFactory()
-					.getOWLNothing(), manager.getOWLDataFactory().getOWLThing());
+			this.reasoner = new JcelReasoner(manager);
 		}
 		return this.reasoner;
 	}
