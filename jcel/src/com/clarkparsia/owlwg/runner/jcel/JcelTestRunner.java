@@ -48,6 +48,7 @@ public class JcelTestRunner extends OwlApi2AbstractRunner {
 		reasoner.clearOntologies();
 		reasoner.loadOntologies(Collections.singleton(o));
 		reasoner.classify();
+
 		boolean ret = reasoner.isConsistent(o);
 		return ret;
 	}

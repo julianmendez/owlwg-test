@@ -45,8 +45,6 @@ import org.semanticweb.owl.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owl.model.OWLTransitiveObjectPropertyAxiom;
 import org.semanticweb.owl.model.SWRLRule;
 
-import de.tudresden.inf.lat.jcel.owlapi.UnsupportedReasonerOperationInJcelException;
-
 /**
  * The EntailmentChecker class for the CEL reasoner.
  * 
@@ -263,7 +261,6 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLEquivalentObjectPropertiesAxiom axiom) {
 
-			// FIXME: really not supported?
 			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: equivalent object properties");
 
@@ -300,7 +297,6 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLDisjointObjectPropertiesAxiom axiom) {
 
-			// FIXME: really not supported?
 			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: disjoint object properties");
 
@@ -366,7 +362,6 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLObjectSubPropertyAxiom axiom) {
 
-			// FIXME: really not supported? (should be)
 			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: object sub property");
 
@@ -376,7 +371,6 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLDisjointUnionAxiom axiom) {
 
-			// FIXME: really not supported? (should be)
 			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: disjoint union");
 
@@ -472,7 +466,6 @@ public class JcelEntailmentChecker {
 
 		@Override
 		public Boolean visit(OWLEquivalentClassesAxiom axiom) {
-
 			boolean ret = true;
 
 			OWLDescription first = null;
@@ -484,7 +477,6 @@ public class JcelEntailmentChecker {
 				}
 
 				try {
-
 					ret = reasoner.isEquivalentClass(first, description);
 
 				} catch (OWLReasonerException e) {
@@ -585,7 +577,6 @@ public class JcelEntailmentChecker {
 		@Override
 		public Boolean visit(OWLObjectPropertyChainSubPropertyAxiom axiom) {
 
-			// FIXME: really unsupported?
 			exception = new UnsupportedReasonerOperationInJcelException(
 					"Unsupported entailment check: property chain sub property");
 

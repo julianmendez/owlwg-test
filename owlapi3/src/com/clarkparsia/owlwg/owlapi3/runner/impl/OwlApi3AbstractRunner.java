@@ -1,6 +1,5 @@
 package com.clarkparsia.owlwg.owlapi3.runner.impl;
 
-import static com.clarkparsia.owlwg.testcase.SerializationFormat.RDFXML;
 import static com.clarkparsia.owlwg.testrun.RunResultType.FAILING;
 import static com.clarkparsia.owlwg.testrun.RunResultType.INCOMPLETE;
 import static com.clarkparsia.owlwg.testrun.RunResultType.PASSING;
@@ -15,7 +14,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.semanticweb.owlapi.inference.OWLReasonerException;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 

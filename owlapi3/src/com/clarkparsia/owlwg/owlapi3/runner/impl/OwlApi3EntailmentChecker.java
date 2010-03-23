@@ -5,9 +5,6 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.semanticweb.owlapi.inference.OWLReasoner;
-import org.semanticweb.owlapi.inference.OWLReasonerException;
-import org.semanticweb.owlapi.inference.UnsupportedReasonerOperationException;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
@@ -15,18 +12,14 @@ import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLAxiomVisitor;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom;
-import org.semanticweb.owlapi.model.OWLHasKeyAxiom;
-import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLSubAnnotationPropertyOfAxiom;
-import org.semanticweb.owlapi.model.OWLSubDataPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
-import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDifferentIndividualsAxiom;
 import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
 import org.semanticweb.owlapi.model.OWLDisjointDataPropertiesAxiom;
@@ -37,25 +30,30 @@ import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLEquivalentObjectPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLHasKeyAxiom;
 import org.semanticweb.owlapi.model.OWLImportsDeclaration;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLNegativeDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLNegativeObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
-import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
-import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLReflexiveObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
+import org.semanticweb.owlapi.model.OWLSubAnnotationPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubDataPropertyOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.SWRLRule;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
 
 /**
  * <p>
@@ -102,24 +100,42 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 		return isEntailed;
 	}
-
+	
+	protected boolean isSubClassOf(
+			OWLClassExpression subDesc, OWLClassExpression superDesc) {
+		boolean ret = reasoner.getEquivalentClasses(subDesc).contains(
+				superDesc.asOWLClass());
+		if (!ret) {
+			ret = reasoner.getSuperClasses(subDesc, false).containsEntity(
+					superDesc.asOWLClass());
+		}
+		return ret;
+	}
+	
+	protected boolean hasType(OWLNamedIndividual individual,
+			OWLClassExpression type, boolean direct) {
+		return reasoner.getTypes(individual, direct).containsEntity(type.asOWLClass());
+	}
+	
 	public void visit(OWLAsymmetricObjectPropertyAxiom axiom) {
 		try {
-			isEntailed = reasoner.isAntiSymmetric( (OWLObjectProperty) axiom.getProperty() );
+			isEntailed = !reasoner.getRootOntology()
+				.getAsymmetricObjectPropertyAxioms(
+					(OWLObjectProperty) axiom.getProperty()).isEmpty();
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}
 	}
 
 	public void visit(OWLClassAssertionAxiom axiom) {
-		OWLIndividual ind = axiom.getIndividual();
+		OWLNamedIndividual ind = axiom.getIndividual().asOWLNamedIndividual();
 		OWLClassExpression c = axiom.getClassExpression();
 
 		try {
 			if( ind.isAnonymous() )
 				isEntailed = reasoner.isSatisfiable( c );
 			else
-				isEntailed = reasoner.hasType( ind.asNamedIndividual(), c, false );
+				isEntailed = hasType( ind.asOWLNamedIndividual(), c, false );
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}
@@ -132,8 +148,8 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 				exception = new UnsupportedReasonerOperationException(
 						"Unsupported entailment check: anonymous individual in data property asserion" );
 			else
-				isEntailed = reasoner.hasDataPropertyRelationship( ind.asNamedIndividual(), axiom
-						.getProperty(), axiom.getObject() );
+				isEntailed = reasoner.getDataPropertyValues( ind.asOWLNamedIndividual(), axiom
+						.getProperty().asOWLDataProperty()).contains( axiom.getObject() );
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}
@@ -142,7 +158,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLDataPropertyDomainAxiom axiom) {
 		try {
-			isEntailed = reasoner.isSubClassOf( factory.getOWLDataSomeValuesFrom( axiom
+			isEntailed = isSubClassOf( factory.getOWLDataSomeValuesFrom( axiom
 					.getProperty(), factory.getTopDatatype() ), axiom.getDomain() );
 		} catch( OWLReasonerException e ) {
 			exception = e;
@@ -151,7 +167,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLDataPropertyRangeAxiom axiom) {
 		try {
-			isEntailed = reasoner.isSubClassOf( factory.getOWLThing(), factory
+			isEntailed = isSubClassOf( factory.getOWLThing(), factory
 					.getOWLDataAllValuesFrom( axiom.getProperty(), axiom.getRange() ) );
 		} catch( OWLReasonerException e ) {
 			exception = e;
@@ -175,7 +191,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 		ArrayList<OWLNamedIndividual> list = new ArrayList<OWLNamedIndividual>();
 		for( OWLIndividual ind : axiom.getIndividuals() ) {
 			if( !ind.isAnonymous() )
-				list.add( ind.asNamedIndividual() );
+				list.add( ind.asOWLNamedIndividual() );
 			else
 				log.warning( "Ignoring anonymous individual in different individuals axiom" );
 		}
@@ -186,7 +202,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 				for( int j = i + 1; j < list.size(); j++ ) {
 					OWLNamedIndividual next = list.get( j );
 
-					if( !reasoner.hasType( head, factory.getOWLObjectComplementOf( factory
+					if( !hasType( head, factory.getOWLObjectComplementOf( factory
 							.getOWLObjectOneOf( next ) ), false ) ) {
 						isEntailed = false;
 						return;
@@ -209,7 +225,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 			for( int i = 0; i < n - 1; i++ ) {
 				for( int j = i + 1; j < n; j++ ) {
 					OWLClassExpression notj = factory.getOWLObjectComplementOf( classes[j] );
-					if( !reasoner.isSubClassOf( classes[i], notj ) ) {
+					if( !isSubClassOf( classes[i], notj ) ) {
 						isEntailed = false;
 						return;
 					}
@@ -246,7 +262,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 				while( i.hasNext() && isEntailed ) {
 					OWLClassExpression next = i.next();
 
-					isEntailed = reasoner.isEquivalentClass( first, next );
+					isEntailed = reasoner.getEquivalentClasses( first ).contains( next.asOWLClass() );
 				}
 			}
 		} catch( OWLReasonerException e ) {
@@ -266,7 +282,9 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLFunctionalDataPropertyAxiom axiom) {
 		try {
-			isEntailed = reasoner.isFunctional( (OWLDataProperty) axiom.getProperty() );
+			isEntailed = !reasoner.getRootOntology()
+				.getFunctionalDataPropertyAxioms(
+					(OWLDataProperty) axiom.getProperty()).isEmpty();
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}
@@ -274,7 +292,9 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLFunctionalObjectPropertyAxiom axiom) {
 		try {
-			isEntailed = reasoner.isFunctional( (OWLObjectProperty) axiom.getProperty() );
+			isEntailed = !reasoner.getRootOntology()
+				.getFunctionalObjectPropertyAxioms(
+					(OWLObjectProperty) axiom.getProperty()).isEmpty();
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}
@@ -288,7 +308,9 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLInverseFunctionalObjectPropertyAxiom axiom) {
 		try {
-			isEntailed = reasoner.isInverseFunctional( (OWLObjectProperty) axiom.getProperty() );
+			isEntailed = !reasoner.getRootOntology()
+				.getInverseFunctionalObjectPropertyAxioms(
+						(OWLObjectProperty) axiom.getProperty()).isEmpty();
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}
@@ -301,7 +323,9 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLIrreflexiveObjectPropertyAxiom axiom) {
 		try {
-			isEntailed = reasoner.isIrreflexive( (OWLObjectProperty) axiom.getProperty() );
+			isEntailed = !reasoner.getRootOntology()
+				.getIrreflexiveObjectPropertyAxioms(
+						(OWLObjectProperty) axiom.getProperty()).isEmpty();
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}
@@ -317,7 +341,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 					.getObject() );
 			OWLClassExpression doesNotHaveValue = factory.getOWLObjectComplementOf( hasValue );
 			try {
-				isEntailed = reasoner.hasType( ind.asNamedIndividual(), doesNotHaveValue, false );
+				isEntailed = hasType( ind.asOWLNamedIndividual(), doesNotHaveValue, false );
 			} catch( OWLReasonerException e ) {
 				exception = e;
 			}
@@ -335,7 +359,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 					.getObject() );
 			OWLClassExpression doesNotHaveValue = factory.getOWLObjectComplementOf( hasValue );
 			try {
-				isEntailed = reasoner.hasType( ind.asNamedIndividual(), doesNotHaveValue, false );
+				isEntailed = hasType( ind.asOWLNamedIndividual(), doesNotHaveValue, false );
 			} catch( OWLReasonerException e ) {
 				exception = e;
 			}
@@ -350,8 +374,8 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 					"Unsupported entailment check: anonymous individual in object property asserion" );
 		else {
 			try {
-				isEntailed = reasoner.hasObjectPropertyRelationship( ind.asNamedIndividual(), axiom
-						.getProperty(), o.asNamedIndividual() );
+				isEntailed = reasoner.getObjectPropertyValues( ind.asOWLNamedIndividual(), axiom
+						.getProperty().asOWLObjectProperty()).containsEntity( o.asOWLNamedIndividual() );
 			} catch( OWLReasonerException e ) {
 				exception = e;
 			}
@@ -364,7 +388,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLObjectPropertyDomainAxiom axiom) {
 		try {
-			isEntailed = reasoner.isSubClassOf( factory.getOWLObjectSomeValuesFrom( axiom
+			isEntailed = isSubClassOf( factory.getOWLObjectSomeValuesFrom( axiom
 					.getProperty(), factory.getOWLThing() ), axiom.getDomain() );
 		} catch( OWLReasonerException e ) {
 			exception = e;
@@ -373,7 +397,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLObjectPropertyRangeAxiom axiom) {
 		try {
-			isEntailed = reasoner.isSubClassOf( factory.getOWLThing(), factory
+			isEntailed = isSubClassOf( factory.getOWLThing(), factory
 					.getOWLObjectAllValuesFrom( axiom.getProperty(), axiom.getRange() ) );
 		} catch( OWLReasonerException e ) {
 			exception = e;
@@ -387,7 +411,9 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLReflexiveObjectPropertyAxiom axiom) {
 		try {
-			isEntailed = reasoner.isReflexive( (OWLObjectProperty) axiom.getProperty() );
+			isEntailed = !reasoner.getRootOntology()
+				.getReflexiveObjectPropertyAxioms(
+						(OWLObjectProperty) axiom.getProperty()).isEmpty();
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}
@@ -399,7 +425,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 		ArrayList<OWLNamedIndividual> list = new ArrayList<OWLNamedIndividual>();
 		for( OWLIndividual ind : axiom.getIndividuals() ) {
 			if( !ind.isAnonymous() )
-				list.add( ind.asNamedIndividual() );
+				list.add( ind.asOWLNamedIndividual() );
 			else
 				log.warning( "Ignoring anonymous individual in different individuals axiom" );
 		}
@@ -411,7 +437,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 				while( i.hasNext() ) {
 					OWLNamedIndividual next = i.next();
 
-					if( !reasoner.hasType( first, factory.getOWLObjectOneOf( next ), false ) ) {
+					if( !hasType( first, factory.getOWLObjectOneOf( next ), false ) ) {
 						isEntailed = false;
 						return;
 					}
@@ -424,7 +450,7 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLSubClassOfAxiom axiom) {
 		try {
-			isEntailed = reasoner.isSubClassOf( axiom.getSubClass(), axiom.getSuperClass() );
+			isEntailed = isSubClassOf( axiom.getSubClass(), axiom.getSuperClass() );
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}
@@ -432,7 +458,9 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLSymmetricObjectPropertyAxiom axiom) {
 		try {
-			isEntailed = reasoner.isSymmetric( (OWLObjectProperty) axiom.getProperty() );
+			isEntailed = !reasoner.getRootOntology()
+				.getSymmetricObjectPropertyAxioms(
+					(OWLObjectProperty) axiom.getProperty()).isEmpty();
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}
@@ -440,7 +468,9 @@ public class OwlApi3EntailmentChecker implements OWLAxiomVisitor {
 
 	public void visit(OWLTransitiveObjectPropertyAxiom axiom) {
 		try {
-			isEntailed = reasoner.isTransitive( (OWLObjectProperty) axiom.getProperty() );
+			isEntailed = !reasoner.getRootOntology()
+				.getTransitiveObjectPropertyAxioms(
+					(OWLObjectProperty) axiom.getProperty()).isEmpty();
 		} catch( OWLReasonerException e ) {
 			exception = e;
 		}

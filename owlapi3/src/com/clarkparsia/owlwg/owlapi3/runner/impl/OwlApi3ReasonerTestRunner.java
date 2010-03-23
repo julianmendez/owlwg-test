@@ -1,14 +1,12 @@
 package com.clarkparsia.owlwg.owlapi3.runner.impl;
 
 import java.net.URI;
-import java.util.Collections;
 
-import org.semanticweb.owlapi.inference.OWLReasoner;
-import org.semanticweb.owlapi.inference.OWLReasonerException;
-import org.semanticweb.owlapi.inference.OWLReasonerFactory;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 
 /**
  * <p>
@@ -48,20 +46,16 @@ public class OwlApi3ReasonerTestRunner extends OwlApi3AbstractRunner {
 
 	protected boolean isConsistent(OWLOntologyManager manager, OWLOntology o)
 			throws OWLReasonerException {
-		OWLReasoner reasoner = reasonerFactory.createReasoner( manager, Collections
-				.<OWLOntology> emptySet() );
-		reasoner.loadOntologies( Collections.singleton( o ) );
-		return reasoner.isConsistent( o );
+		OWLReasoner reasoner = reasonerFactory.createReasoner( o );
+		return reasoner.isConsistent();
 	}
 
 	protected boolean isEntailed(OWLOntologyManager manager, OWLOntology premise,
 			OWLOntology conclusion) throws OWLReasonerException {
-		OWLReasoner reasoner = reasonerFactory.createReasoner( manager, Collections
-				.<OWLOntology> emptySet() );
+		OWLReasoner reasoner = reasonerFactory.createReasoner( premise );
 		OwlApi3EntailmentChecker checker = new OwlApi3EntailmentChecker( reasoner, manager
 				.getOWLDataFactory() );
 
-		reasoner.loadOntologies( Collections.singleton( premise ) );
 		for( OWLAxiom axiom : conclusion.getLogicalAxioms() ) {
 			if( !checker.isEntailed( axiom ) )
 				return false;

@@ -2,19 +2,19 @@ package com.clarkparsia.owlwg.runner.jcel;
 
 import org.semanticweb.owl.model.OWLOntologyManager;
 
-import de.tudresden.inf.lat.jcel.owlapi.JcelReasoner;
+import de.tudresden.inf.lat.jcel.protege.main.JcelOldReasoner;
 
 public class JcelReasonerManager {
 
 	private static JcelReasonerManager instance = null;
-	private JcelReasoner reasoner = null;
+	private JcelOldReasoner reasoner = null;
 
 	private JcelReasonerManager() {
 	}
 
-	public JcelReasoner getJcelReasoner(OWLOntologyManager manager) {
+	public JcelOldReasoner getJcelReasoner(OWLOntologyManager manager) {
 		if (this.reasoner == null && manager != null) {
-			this.reasoner = new JcelReasoner(manager);
+			this.reasoner = new JcelOldReasoner(manager);
 		}
 		return this.reasoner;
 	}

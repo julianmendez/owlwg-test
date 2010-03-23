@@ -2,8 +2,9 @@ package com.clarkparsia.owlwg.owlapi3.testcase.impl;
 
 import java.util.EnumMap;
 
+import org.semanticweb.owl.io.StringInputSource;
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.StringInputSource;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -59,7 +60,7 @@ public abstract class OwlApi3xCTImpl extends AbstractPremisedTest<OWLOntology> i
 					return null;
 
 				StringInputSource source = new StringInputSource( l );
-				o = getOWLOntologyManager().loadOntology( source );
+				o = getOWLOntologyManager().loadOntology( IRI.create( source.getPhysicalURI() ) );
 				parsedPremise.put( format, o );
 			}
 			return o;

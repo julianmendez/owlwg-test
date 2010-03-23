@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="owlwgtest" default="dist" basedir=".">
 
-	<!--
+	<!-- 
 	Build file for the OWL Working Group Test project.
 	It requires Apache Ant ( http://ant.apache.org ).
+	For more information about this file, see http://ant.apache.org 
 	-->
 
-	<property file="build.number" />
+	<!-- Imports version properties. -->
+	<property file="version.properties" />
+	<!-- 
+	Three new properties are defined at this point : 
+	  * version : has the version number of the form major.minor.patch 
+	  * build.number : has the build number
+	  * requiredjars : has a space-separated list of the jars required to compile the project and run the test cases 
+	-->
 
 	<property name="dist.path" value="${basedir}/dist" />
 
@@ -15,7 +23,6 @@
 	<property name="_cel.path" value="cel" />
 	<property name="_jcel.path" value="jcel" />
 	<property name="_factpp.path" value="factpp" />
-	<property name="_hermit.path" value="hermit" />
 	<property name="_pellet.path" value="pellet" />
 
 	<property name="_core.src.path" value="${_core.path}/src" />
@@ -23,31 +30,29 @@
 	<property name="_cel.src.path" value="${_cel.path}/src" />
 	<property name="_jcel.src.path" value="${_jcel.path}/src" />
 	<property name="_factpp.src.path" value="${_factpp.path}/src" />
-	<property name="_hermit.src.path" value="${_hermit.path}/src" />
 	<property name="_pellet.src.path" value="${_pellet.path}/src" />
 
 	<property name="_core.lib.path" value="lib" />
 	<property name="_cel.lib.path" value="${_cel.path}/lib" />
 	<property name="_jcel.lib.path" value="${_jcel.path}/lib" />
-	<property name="_hermit.lib.path" value="${_hermit.path}/lib" />
 	<property name="_pellet.lib.path" value="${_pellet.path}/lib" />
 
 	<property name="_src.doc.path" value="doc" />
+	<property name="_jars.path" value="${basedir}" />
 	<property name="_manifest.path" value="manifest/MANIFEST.MF" />
 	<property name="_javadoc.path" value="${dist.path}/javadoc" />
 	<property name="_main.bin.path" value="${dist.path}/bin" />
 	<property name="_prjlib.path" value="${dist.path}/lib" />
 	<property name="_app.path" value="${dist.path}/app" />
-	<property name="_zipfile.path" value="${basedir}/../${ant.project.name}-${version_id}.${build.number}.zip" />
+	<property name="_zipfile.path" value="${basedir}/../${ant.project.name}-${version}.${build.number}.zip" />
 	<property name="_debuglevel" value="lines,vars,source" />
 
 
 	<path id="all.libraries">
-		<fileset dir="${_core.lib.path}" />
-		<fileset dir="${_cel.lib.path}" />
-		<fileset dir="${_jcel.lib.path}" />
-		<fileset dir="${_hermit.lib.path}" />
-		<fileset dir="${_pellet.lib.path}" />
+		<fileset dir="${_jars.path}" includes="${requiredjars}" />
+	</path>
+
+	<path id="libs.path">
 	</path>
 
 	<!-- Cleans everything before the compilation. -->
@@ -63,7 +68,6 @@
 			<src path="${_owlapi3.src.path}" />
 			<src path="${_cel.src.path}" />
 			<src path="${_jcel.src.path}" />
-			<src path="${_hermit.src.path}" />
 			<src path="${_pellet.src.path}" />
 		</javac>
 	</target>
@@ -72,14 +76,14 @@
 	<target name="javadoc">
 		<mkdir dir="${_javadoc.path}" />
 		<javadoc packagenames="*" 
-		    sourcepath="${_src.doc.path}:${_core.src.path}:${_owlapi3.src.path}:${_cel.src.path}:${_jcel.src.path}:${_hermit.src.path}:${_pellet.src.path}" 
+		    sourcepath="${_src.doc.path}:${_core.src.path}:${_owlapi3.src.path}:${_cel.src.path}:${_jcel.src.path}:${_pellet.src.path}" 
 		    destdir="${_javadoc.path}" version="true" use="true" windowtitle="${ant.project.name}" overview="${_src.doc.path}/overview.html" classpathref="all.libraries" access="package" />
 	</target>
 
 	<!-- Creates a jar with version number. -->
 	<target name="jar" depends="build">
 		<mkdir dir="${_prjlib.path}" />
-		<jar destfile="${_prjlib.path}/${ant.project.name}-${version_id}.jar" basedir="${_main.bin.path}" manifest="${_manifest.path}" />
+		<jar destfile="${_prjlib.path}/${ant.project.name}-${version}.jar" basedir="${_main.bin.path}" manifest="${_manifest.path}" />
 	</target>
 
 	<!-- Creates a jar that can be executed with java -jar . -->
@@ -87,14 +91,7 @@
 		<mkdir dir="${_app.path}" />
 		<jar destfile="${_app.path}/${ant.project.name}.jar" basedir="${_main.bin.path}" manifest="${_manifest.path}" />
 		<copy todir="${_app.path}">
-			<fileset dir="${basedir}">
-				<include name="${_core.lib.path}/**/*.jar" />
-				<exclude name="${_core.lib.path}/**/*-src.jar" />
-				<include name="${_cel.lib.path}/**/*.jar" />
-				<include name="${_jcel.lib.path}/**/*.jar" />
-				<include name="${_hermit.lib.path}/**/*.jar" />
-				<include name="${_pellet.lib.path}/**/*.jar" />
-			</fileset>
+			<fileset dir="${_jars.path}" includes="${requiredjars}" />
 		</copy>
 	</target>
 
@@ -110,4 +107,5 @@
 	</target>
 
 </project>
+
 

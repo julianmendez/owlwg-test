@@ -4,11 +4,11 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.logging.Level;
 
-import org.semanticweb.owlapi.inference.OWLReasonerException;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import com.clarkparsia.owlwg.Harness;
+import com.clarkparsia.owlwg.owlapi3.runner.impl.OWLReasonerException;
 import com.clarkparsia.owlwg.owlapi3.runner.impl.OwlApi3AbstractRunner;
 import com.clarkparsia.owlwg.owlapi3.testcase.impl.OwlApi3TestCaseFactory;
 import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;

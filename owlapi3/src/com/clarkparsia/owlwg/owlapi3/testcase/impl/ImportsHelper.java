@@ -5,7 +5,7 @@ import static java.lang.String.format;
 import java.net.URI;
 import java.util.logging.Logger;
 
-import org.semanticweb.owlapi.io.StringInputSource;
+import org.semanticweb.owl.io.StringInputSource;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -54,7 +54,7 @@ public class ImportsHelper {
 				else {
 					StringInputSource source = new StringInputSource( str );
 					try {
-						manager.loadOntology( source );
+						manager.loadOntology( IRI.create( source.getPhysicalURI() ) );
 					} catch( OWLOntologyCreationException e ) {
 						log.warning( format( "Failed to parse imported ontology for testcase (%s)",
 								t.getIdentifier() ) );
