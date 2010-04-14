@@ -15,7 +15,7 @@ Class-Path: lib/commons-cli/commons-cli-1.2.jar
  pellet/lib/xsdlib/xsdlib.jar 
  cel/lib/jsexp/jsexp-0.1.0.jar 
  cel/lib/de.tudresden.inf.lat.cel/de.tudresden.inf.lat.cel.jar 
- jcel/lib/de.tudresden.inf.lat.jcel.core/de.tudresden.inf.lat.jcel.core-0.6.0.jar 
- jcel/lib/de.tudresden.inf.lat.jcel.owlapi/de.tudresden.inf.lat.jcel.owlapi-0.6.0.jar 
- jcel/lib/de.tudresden.inf.lat.jcel.adapter/de.tudresden.inf.lat.jcel.adapter-0.6.0.jar 
- jcel/lib/de.tudresden.inf.lat.jcel.protege/de.tudresden.inf.lat.jcel.protege-0.6.0.jar
+ jcel/lib/de.tudresden.inf.lat.jcel.core/de.tudresden.inf.lat.jcel.core-0.7.0.jar 
+ jcel/lib/de.tudresden.inf.lat.jcel.owlapi/de.tudresden.inf.lat.jcel.owlapi-0.7.0.jar 
+ jcel/lib/de.tudresden.inf.lat.jcel.adapter/de.tudresden.inf.lat.jcel.adapter-0.7.0.jar 
+ jcel/lib/de.tudresden.inf.lat.jcel.protege/de.tudresden.inf.lat.jcel.protege-0.7.0.jar
