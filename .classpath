@@ -14,9 +14,9 @@
 	<classpathentry kind="lib" path="pellet/lib/pellet-owlapi.jar"/>
 	<classpathentry kind="lib" path="pellet/lib/pellet-owlapiv3.jar"/>
 	<classpathentry kind="lib" path="cel/lib/de.tudresden.inf.lat.cel/de.tudresden.inf.lat.cel.jar"/>
-	<classpathentry kind="lib" path="jcel/lib/de.tudresden.inf.lat.jcel.core/de.tudresden.inf.lat.jcel.core-0.7.0.jar"/>
-	<classpathentry kind="lib" path="jcel/lib/de.tudresden.inf.lat.jcel.owlapi/de.tudresden.inf.lat.jcel.owlapi-0.7.0.jar"/>
-	<classpathentry kind="lib" path="jcel/lib/de.tudresden.inf.lat.jcel.adapter/de.tudresden.inf.lat.jcel.adapter-0.7.0.jar"/>
-	<classpathentry kind="lib" path="jcel/lib/de.tudresden.inf.lat.jcel.protege/de.tudresden.inf.lat.jcel.protege-0.7.0.jar"/>
+	<classpathentry kind="lib" path="jcel/lib/de.tudresden.inf.lat.jcel.core/de.tudresden.inf.lat.jcel.core-0.8.0.jar"/>
+	<classpathentry kind="lib" path="jcel/lib/de.tudresden.inf.lat.jcel.owlapi/de.tudresden.inf.lat.jcel.owlapi-0.8.0.jar"/>
+	<classpathentry kind="lib" path="jcel/lib/de.tudresden.inf.lat.jcel.adapter/de.tudresden.inf.lat.jcel.adapter-0.8.0.jar"/>
+	<classpathentry kind="lib" path="jcel/lib/de.tudresden.inf.lat.jcel.protege/de.tudresden.inf.lat.jcel.protege-0.8.0.jar"/>
 	<classpathentry kind="output" path="dist/bin"/>
 </classpath>
